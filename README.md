@@ -1,4 +1,4 @@
- ASSUGNMENT 7
+ ASSIGNMENT 7
 
  1. Question: Explain what are stateless widgets and stateful widgets, and explain the difference between them.
 
