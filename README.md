@@ -6,58 +6,9 @@ Answer: In Flutter, widgets are fundamental components that create the app's use
 
  2. Question: Mention the widgets that you have used for this project and its uses.
 
- Answer: 
-- StatelessWidget
-Usage: MyHomePage, InfoCard, ItemCard, MyApp
-Purpose: Used for building widgets that do not hold any mutable state. They can be rebuilt when their parent widget changes.
-- MaterialApp
-Usage: In MyApp
-Purpose: The top-level widget that wraps the entire application and provides the necessary context for material design. It sets up themes, routing, and other app-wide configurations.
-- Scaffold
-Usage: In MyHomePage
-Purpose: Provides a framework that implements the basic material design visual layout structure, including the AppBar, body, FloatingActionButton, BottomNavigationBar, etc.
-- AppBar
-Usage: In MyHomePage
-Purpose: A material design app bar that holds the title and other actions at the top of the screen.
-- Padding
-Usage: In MyHomePage
-Purpose: A widget that adds empty space around its child. Useful for providing space between widgets to improve layout and appearance.
-- Column
-Usage: In MyHomePage
-Purpose: A widget that arranges its children vertically. It allows developers to stack multiple widgets on top of each other.
-- Row
-Usage: In MyHomePage
-Purpose: Similar to Column, but arranges its children horizontally. Used to display InfoCard widgets side by side.
-- SizedBox
-Usage: In MyHomePage
-Purpose: A box with a specified size, used to create vertical space between widgets.
-- Center
-Usage: In MyHomePage
-Purpose: A widget that centers its child within itself. Useful for aligning widgets in the middle of the screen.
-- Text
-Usage: In InfoCard and MyHomePage
-Purpose: A widget that displays a string of text with a single style. It's customizable for font size, weight, color, and alignment.
-- GridView
-Usage: In MyHomePage
-Purpose: A scrollable grid that displays its children in a two-dimensional array. Used here to display the ItemCard widgets in a grid layout.
-- Card
-Usage: In InfoCard and ItemCard
-Purpose: A material design card that provides a surface for displaying information. It has a shadow effect and can contain other widgets.
-- Material
-Usage: In ItemCard
-Purpose: A widget that provides a Material design visual effect. Used to apply the background color and elevation to the ItemCard.
-- InkWell
-Usage: In ItemCard
-Purpose: A material design widget that responds to touch events, allowing for tap gestures. It provides ripple effects when tapped.
-- Icon
-Usage: In ItemCard
-Purpose: A widget that displays an icon. Icons can be customized in size and color.
-- SnackBar
-Usage: In ItemCard
-Purpose: A lightweight message that provides feedback about an operation. It appears temporarily at the bottom of the screen.
-- Container
-Usage: In various widgets
-Purpose: A box model that can contain other widgets, allowing for size, padding, alignment, decoration, and constraints. Used for layout adjustments and styling.
+ Answer: In this app, StatelessWidget is used in components like MyHomePage, InfoCard, and ItemCard to build elements that don’t need to change once displayed. The whole app is wrapped in MaterialApp, setting up themes, routing, and a consistent design. Each screen layout is managed by Scaffold, providing a base structure with an AppBar at the top for titles and actions, a body, and other essential elements like a floating action button. Spacing and alignment are handled by widgets such as Padding, SizedBox, Center, Column, and Row, allowing you to stack, center, or arrange items both vertically and horizontally.
+
+To display information, Text widgets are used for content, while GridView organizes ItemCard widgets in a scrollable grid format. Card components are also used to give a polished look to items with shadows and a slight elevation, while Material and InkWell add interaction effects like ripples when tapped. For visual icons, Icon provides customizable symbols, and SnackBar shows temporary messages at the screen's bottom for quick feedback, like confirming actions. Finally, Container is a versatile box that holds other widgets and helps manage styling, size, and layout adjustments across different parts of the app.
 
  3. Question: What is the use-case for setState()? Explain the variable that can be affected by setState().
 
