@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nakama_collective/menu.dart';
+import 'package:nakama_collective/screens/menu.dart';
 
 
 void main() {
@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
          colorScheme: ColorScheme.fromSwatch(
-       primarySwatch: Colors.deepPurple,
- ).copyWith(secondary: Colors.deepPurple[400]),
+       primarySwatch: Colors.teal,
+ ).copyWith(secondary: Colors.teal[400]),
       ),
       home: MyHomePage(),
     );

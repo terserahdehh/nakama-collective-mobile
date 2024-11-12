@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nakama_collective/widgets/left_drawer.dart';
+import 'package:nakama_collective/widgets/product_card.dart';
+
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({super.key});
@@ -6,7 +9,7 @@ class MyHomePage extends StatelessWidget {
     final String name = 'Serafina Nala Putri Setiawan'; // Name
     final String className = 'PBP KKI'; // Class
     final List<ItemHomepage> items = [
-    ItemHomepage("View Product List", Icons.list),
+    ItemHomepage("View Products", Icons.list),
     ItemHomepage("Add Product", Icons.add),
     ItemHomepage("Logout", Icons.logout),
      ];
@@ -21,12 +24,12 @@ class MyHomePage extends StatelessWidget {
 
 
   @override
-   @override
   Widget build(BuildContext context) {
     // Scaffold provides the basic structure of the page with the AppBar and body.
     return Scaffold(
       // AppBar is the top part of the page that displays the title.
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           'Nakama Collective',
           style: TextStyle(
@@ -37,6 +40,7 @@ class MyHomePage extends StatelessWidget {
         // The background color of the AppBar is obtained from the application theme color scheme.
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: const LeftDrawer(),
       // Body of the page with paddings around it.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -135,70 +139,3 @@ class InfoCard extends StatelessWidget {
 }
 
 
-class ItemHomepage {
-    final String name;
-    final IconData icon;
-
-    ItemHomepage(this.name, this.icon);
-}
-
-
-class ItemCard extends StatelessWidget {
-  // Display the card with an icon and name.
-
-  final ItemHomepage item; 
-  
-  const ItemCard(this.item, {super.key}); 
-
-  @override
-  Widget build(BuildContext context) {
-    // Set color based on the item name
-    Color backgroundColor;
-    if (item.name == "View Product List") {
-      backgroundColor = Colors.green;
-    } else if (item.name == "Add Product") {
-      backgroundColor = Colors.yellow;
-    } else if (item.name == "Logout") {
-      backgroundColor = Colors.red;
-    } else {
-      backgroundColor = Theme.of(context).colorScheme.secondary;
-    }
-
-    return Material(
-      color: backgroundColor, // Apply the background color
-      borderRadius: BorderRadius.circular(12),
-      
-      child: InkWell(
-        onTap: () {
-          // Display the SnackBar message when the card is pressed.
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("You have pressed the ${item.name} button!"))
-            );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
