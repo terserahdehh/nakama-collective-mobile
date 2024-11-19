@@ -328,4 +328,161 @@ Answer: The authentication process begins in Flutter when the user enters their 
 ### Question 6: Explain how you implement the checklist above step by step! (not just following the tutorial).
 Answer: 
 
+First I set up authentication in django for Flutter by creating a django app named authentication in my nakama-collective django and added authentication to INSTALLED_APPS in the main project settings.py file of the django application. Then I run the command ```pip install django-cors-headers``` to install the required library after enabling the virtual environment and adding django-cors-headers to ```requirements.txt``` as well. After that I aaded corsheaders to INSTALLED_APPS in the main project settings.py file in the nakama-collective django and added
+```corsheaders.middleware.CorsMiddleware``` to MIDDLEWARE in the ```settings.py``` of the main project.  
+
+To integrate the Flutter Form with the Django Service, I created a new views function in the main/views.py in the Django project. Then I connected the page product_form.dart to CookieRequest by adding this code 
+
+```
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_product = Product.objects.create(
+            user=request.user,
+            name=data["name"],
+            description=data["description"],
+            price=int(data["price"]),
+            stock=int(data["stock"]),
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+```
+I also connected the page productentry_form.dart to CookieRequest by adding this code.
+
+```
+@override
+  Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
+    return Scaffold(
+
+```
+For logout feature implementation, I added a method for logout in the authentication/views.py
+
+```
+@csrf_exempt
+def logout(request):
+    username = request.user.username
+
+    try:
+        auth_logout(request)
+        return JsonResponse({
+            "username": username,
+            "status": True,
+            "message": "Logged out successfully!"
+        }, status=200)
+    except:
+        return JsonResponse({
+        "status": False,
+        "message": "Logout failed."
+        }, status=401)
+```
+Then to create a detail page for each item listed on the Product list page, I created a new file product_details.dart which consists of this
+
+```
+import 'package:flutter/material.dart'; 
+import 'package:nakama_collective/models/product_entry.dart'; 
+class ProductDetailsPage extends StatelessWidget {
+  final Product product;
+  const ProductDetailsPage({super.key, required this.product});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(product.fields.name), 
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () => Navigator.pop(context), 
+          ),
+        ], // Widget[]
+      ), // AppBar
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              product.fields.name,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ), // Text
+            const SizedBox(height: 10),
+            Text("Description: ${product.fields.description}", style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 10),
+            Text("Price: ${product.fields.price}", style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 10),
+            Text("Stock: ${product.fields.stock}", style: const TextStyle(fontSize: 16)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+Then in list_productentry.dart I imported the product_details.dart
+
+```
+
+import 'package:nakama_collective/widgets/product_details.dart';
+
+```
+
+Next I added these lines
+
+```
+ title: const Text('Product List'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+```
+```
+itemBuilder: (context, index) {
+                  final product = snapshot.data![index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailsPage(product: product),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey, // Color of the border
+                            width: 1, // Width of the border
+                          ),
+                          borderRadius: BorderRadius.circular(12), // Border radius of the container
+                        ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${snapshot.data![index].fields.name}",
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.description}"),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.price}"),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.stock}")
+                          ],
+```
+
 </details>
