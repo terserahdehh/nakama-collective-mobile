@@ -1,5 +1,9 @@
-import 'package:nakama_collective/screens/productentry_form.dart'; 
 import 'package:flutter/material.dart';
+import 'package:nakama_collective/screens/productentry_form.dart';
+import 'package:nakama_collective/screens/list_productentry.dart';
+import 'package:nakama_collective/screens/login.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 class ItemHomepage {
     final String name;
@@ -20,7 +24,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Set color based on the item name
     Color backgroundColor;
-    if (item.name == "View Products") {
+    if (item.name == "View Product List") {
       backgroundColor = Colors.lightBlue;
     } else if (item.name == "Add Product") {
       backgroundColor = Colors.yellow;
@@ -30,12 +34,13 @@ class ItemCard extends StatelessWidget {
       backgroundColor = Theme.of(context).colorScheme.secondary;
     }
 
+    final request = context.watch<CookieRequest>();
     return Material(
       color: backgroundColor, // Apply the background color
       borderRadius: BorderRadius.circular(12),
 
       child: InkWell(
-        onTap: () {
+        onTap: () async{
           // Display the SnackBar message when the card is pressed.
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -50,6 +55,37 @@ class ItemCard extends StatelessWidget {
               ),
             );
           }
+          else if (item.name == "View Product List") {
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (context) => const ProductPage()
+                ),
+            );
+        }
+          else if (item.name == "Logout") {
+            final response = await request.logout(
+                // TODO: Change the URL to your Django app's URL. Don't forget to add the trailing slash (/) if needed.
+                "http://localhost:8000/auth/logout/");
+            String message = response["message"];
+            if (context.mounted) {
+                if (response['status']) {
+                    String uname = response["username"];
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message Goodbye, $uname."),
+                    ));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(message),
+                        ),
+                    );
+                }
+            }
+        }
         },
         child: Container(
           padding: const EdgeInsets.all(8),

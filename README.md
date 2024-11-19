@@ -306,3 +306,26 @@ Answer:  In my main.dart, I used the ThemeData class to customize the theme. Spe
 Answer: In a multi page Flutter application, navigation is managed using the Navigator class, which handles the stack of pages or screens. The basic approach involves using Navigator.push() to navigate to a new screen and Navigator.pop() to return to the previous one. For more structured and organized navigation, especially in larger apps, named routes are commonly used. This allows you to define route names in the MaterialApp widget and navigate using Navigator.pushNamed(). Additionally, side menus like Drawer and bottom navigation bars can be implemented by pushing new routes based on user interactions. For complex navigation needs, libraries like go_router or auto_route offer advanced routing features, enabling nested navigation and easier management of page transitions. 
 
 </details>
+
+<details>
+<Summary><b>ASSIGNMENT 9</b></summary>
+
+### Question 1: Explain why we need to create a model to retrieve or send JSON data. Will an error occur if we don't create a model first? 
+Answer: Creating a model to handle JSON data helps organize and validate the data before sending or retrieving it. Without a model, the data can be messy and inconsistent, leading to errors or unexpected behavior. While you can send or receive JSON without a model, it’s riskier because you lose the structure and checks that a model provides, which can lead to issues like corrupted data or bad responses. A model makes sure everything is in order and reduces the chance of errors.
+
+### Question 2: Explain the function of the http library that you implemented for this task.
+Answer: The http library in Flutter is used to send requests between the Flutter app and the Django backend. It allows the app to fetch data from or send data to the Django API using methods like GET and POST. For example, a GET request can retrieve data, while a POST request sends information such as user input. The library also helps handle responses, manage errors, and include authentication tokens in headers when needed.
+ 
+### Question 3: Explain the function of CookieRequest and why it’s necessary to share the CookieRequest instance with all components in the Flutter app.
+Answer: The CookieRequest class in Flutter is used to manage cookies, which help maintain user sessions or store authentication data. When a user logs in, the server sends a cookie, and this cookie needs to be included in future requests. Sharing the CookieRequest instance across the app is important because it ensures that the same cookie is sent with every request, keeping the user's session active. If the instance isn't shared, different parts of the app might treat the user as a new session, leading to issues like being logged out unexpectedly.
+ 
+### Question 4: Explain the mechanism of data transmission, from input to display in Flutter.
+Answer: In Flutter, when a user inputs data (like typing in a text field or tapping a button), it gets stored in the app's state. The app can then process this data, such as sending it to a server or making changes locally. Once the data is updated, Flutter automatically refreshes the UI to show the new information. This ensures that the display always reflects the latest state, whether it's based on user input or data fetched from a backend.
+
+### Question 5: Explain the authentication mechanism from login, register, to logout. Start from inputting account data in Flutter to Django’s completion of the authentication process and display of the menu in Flutter.
+Answer: The authentication process begins in Flutter when the user enters their account details in the login or registration form. Flutter sends this data to the Django backend via an HTTP request. In the case of registration, Django creates a new user account and sends a success response. For login, Django checks the credentials, and if they’re correct, it returns a token. Flutter stores this token securely to keep the user logged in. On logout, the token is removed. After successful authentication, Django sends back the necessary data and Flutter updates the UI to show the menu or user-specific content.
+
+### Question 6: Explain how you implement the checklist above step by step! (not just following the tutorial).
+Answer: 
+
+</details>

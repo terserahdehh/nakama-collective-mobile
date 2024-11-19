@@ -9,7 +9,7 @@ class MyHomePage extends StatelessWidget {
     final String name = 'Serafina Nala Putri Setiawan'; // Name
     final String className = 'PBP KKI'; // Class
     final List<ItemHomepage> items = [
-    ItemHomepage("View Products", Icons.list),
+    ItemHomepage("View Product List", Icons.list),
     ItemHomepage("Add Product", Icons.add),
     ItemHomepage("Logout", Icons.logout),
      ];
@@ -137,5 +137,4 @@ class InfoCard extends StatelessWidget {
     );
   }
 }
-
-
+  
